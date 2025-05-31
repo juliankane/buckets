@@ -1,0 +1,14 @@
+
+.DS_Store
+*.log
+node_modules
+/build
+/dist
+# Environment files
+.env
+.env.local
+.vscode/
+cognito.config.js
+
+
+
