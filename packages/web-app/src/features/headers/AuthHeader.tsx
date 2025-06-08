@@ -1,16 +1,31 @@
 
-import { HelpButton } from "./components/HelpButton";
-import { HomeLogo } from "./components/HomeLogo";
+import { Header } from "@components/@containers/Header";
+import { HomeLogo } from "../buttons/HomeLogo";
+import { Button } from "@components/@base/Button";
+import { Bars3Icon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 export function AuthHeader(){
     return (
-        <header className='fixed inset-x-0 top-0 z-10 border-b-2 bg-background-rich border-border'>
-            <div className="flex h-20 items-center justify-between gap-8 sm:px-6">
-                <HomeLogo logoFill={false} showTitle={false} />
-                    <div className="flex space-x-3">
-                        <HelpButton/>
+        <Header className="invisible md:visible"variant="fixed">
+            <div className="flex flex-row w-full items-center px-2 justify-between">
+                <div className="invisible md:visible">
+                    <HomeLogo logoFill={false} showTitle={false} />
+                </div>
+        
+                <div className="flex items-center space-x-2">
+                    <div className="invisible md:visible">
+                        <Link to={"/help"} className="hover:cursor-pointer flex items-center">
+                            <QuestionMarkCircleIcon className="w-12 h-12 text-text-secondary"/>
+                        </Link>
                     </div>
+
+                    <Button variant="icon">
+                        <Bars3Icon className=''/>
+                    </Button>
+                </div>
+                 
             </div>
-        </header>
+        </Header>
     )
 }

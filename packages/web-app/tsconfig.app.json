@@ -36,7 +36,9 @@
       "@features/*": ["./features/*"],
       "@store/*": ["./store/*"],
       "@utils/*": ["./utils/*"],
+      "@context/*": ["./context/*"],
+      "@layouts/*": ["./layouts/*"],
     },
   },
-  "include": ["src", "templates", "tailwind.config.js", "express/server.ts", "src/features/headers/components/.tsx"]
+  "include": ["src", "templates", "tailwind.config.js", "express/server.ts", "src/features/components/.tsx"]
 }

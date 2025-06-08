@@ -1,132 +1,86 @@
-import { SidePanelItem } from "./SidePaneItem";
-import { Logo } from "@assets/index";
-import { safeClick } from "@utils/safeClick";
-
-import {
-  Bars3Icon,
-  EllipsisHorizontalIcon,
-  Squares2X2Icon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
-import { useUserStore } from '../../store/userStore'; // adjust path as needed
-
-
-export function SidePanel() {
-  const [showPanel, setShowPanel] = useState(true);
-  const togglePanel = () => setShowPanel(!showPanel);
-  
-  const user = useUserStore((state) => state.user);
+import React from "react";
+import { Link } from "react-router-dom";
+import {  Menu, LayoutDashboardIcon, Settings } from "lucide-react"; // or your icon imports
 
 
 
 
-  return (
-    <>
-      {/* Sidebar container*/}
-      <div
-        id="left"
-        className={`
-          flex justify-between flex-col text-nowrap flex-shrink-0 transition-all duration-300 ease-in-out 
-          bg-background-rich border-r-3 border-border 
-          ${showPanel ? 'w-64' : 'w-20 border-border/30'}
-          h-screen
-          overflow-hidden
-        `}  style={{transitionProperty: 'width, padding',
-        }}
-      >
-        <div className="p-5 items-center h-16">
-          <button
-        className="rounded-full hover:bg-bucket-aqua-bright hover:text-white transition ease-out hover:cursor-pointer"
-        onClick={togglePanel}
-          >
-        <Bars3Icon className="w-10 h-10 " />
-          </button>
-        </div>
+type SidePanelProps = {
+    collapsed: boolean;
+    setCollapsed: (e:boolean) => void;
 
-        <div
-          className={`flex-grow h-screen px-2 py-3 space-y-2`}
-          style={{
-        scrollbarGutter: 'stable both-edges',
-        transition: 'padding 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        paddingLeft: showPanel ? '0.5rem' : '0.25rem',
-        paddingRight: showPanel ? '0.5rem' : '0.25rem',
-          }}
-        >
-          <>
-        {/* Expanded Content */}
-        {showPanel ? (
-          <>
-            {/* Group 1 */}
-            <div className="mb-6">
-          <SidePanelItem
-            to="dashboard"
-            leftIcon={<Squares2X2Icon className="w-12 h-12 stroke-black" />}
-            rightIcon={
-              <button
-            className="hover:bg-text-muted hover:text-white rounded-full transiton ease-out"
-            onClick={safeClick(() => {
-              console.log("Ellipsis clicked");
-            })}
-              >
-            <EllipsisHorizontalIcon className="w-8 h-8 " />
-              </button>
-            }
-          >
-            Dashboard
-          </SidePanelItem>
-
-          <SidePanelItem
-            to="buckets"
-            leftIcon={<Logo className=" w-12 h-12 stroke-black" />}
-            rightIcon={
-              <button
-            className="hover:bg-text-muted hover:text-white rounded-full transition ease-out"
-            onClick={safeClick(() => {
-              console.log("Ellipsis clicked");
-            })}
-              >
-            <EllipsisHorizontalIcon className="w-8 h-8 " />
-              </button>
-            }
-          >
-            Buckets
-          </SidePanelItem>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* Collapsed Content - Icon Only */}
-            <SidePanelItem to="dashboard" type="icon" leftIcon={<Squares2X2Icon className="w-12 h-12 text-gray-700" />} />
-            <SidePanelItem to="buckets" type="icon" leftIcon={<Logo className="w-12 h-12 text-gray-700" />} />
-          </>
-        )}
-          </>
-        </div>
-        {/* Panel Footer */}
-
-
-
-        {showPanel ? (
-          <>
-        <SidePanelItem
-          to="profile"
-          type="icon"
-          leftIcon={<UserCircleIcon className="w-12 h-12 text-gray-700" />}
-        >
-          {user?.name ?? "Guest"}
-        </SidePanelItem>
-          </>
-        ) : (
-          <>
-        <SidePanelItem
-          to="profile"
-          type="icon"
-          leftIcon={<UserCircleIcon className="w-12 h-12 text-gray-700" />}
-        />
-          </>
-        )}
-      </div>
-    </>
-  );
 }
+
+export const SidePanel = ({collapsed, setCollapsed}: SidePanelProps) => {
+
+
+  
+
+  const toggleSidebar = () => setCollapsed(!collapsed);
+
+  // Sidebar width for desktop
+  const sidebarWidth = collapsed ? "w-20" : "w-48";
+    return (
+      <div
+  className={`fixed left-0 top-0 h-screen bg-background text-text-primary border-r flex ${sidebarWidth} transition-all ease-in-out duration-100 z-10`}
+>
+        <div className="flex flex-col w-full">
+          {/* Toggle Button */}
+          <div className="flex flex-col">
+            <button
+              onClick={toggleSidebar}
+              className="p-6 focus:outline-none hover:bg-background-secondary"
+            >
+              <Menu />
+            </button>
+          </div>
+
+          {/* Navigation Items */}
+          <nav className="flex flex-col h-full justify-between gap-2 mt-4">
+            <div>
+              <SidebarItem
+                icon={<LayoutDashboardIcon />}
+                label="Dashboard"
+                collapsed={collapsed}
+                navTo="dashboard"
+              />
+            </div>
+
+            <div>
+              <SidebarItem
+                icon={<Settings />}
+                label="Settings"
+                collapsed={collapsed}
+                navTo="settings"
+              />
+            </div>
+          </nav>
+        </div>
+      </div>
+    );
+};
+
+const SidebarItem = ({
+  icon,
+  label,
+  collapsed,
+  navTo,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  collapsed: boolean;
+  navTo: string;
+  onClick?: () => void;
+}) => {
+  return (
+    <Link
+      to={navTo}
+      onClick={onClick}
+      className="flex items-center gap-4 px-6 py-2 hover:bg-background-secondary cursor-pointer"
+    >
+      <span className="text-xl">{icon}</span>
+      {!collapsed && <span className="text-sm">{label}</span>}
+    </Link>
+  );
+};

@@ -1,8 +1,8 @@
-import { SearchBar } from "@components/SearchBar"
-import { ProfileMenu } from "@features/headers/components/ProfileMenu"
+import { SearchBar } from "@components/@ui/SearchBar"
+import { ProfileMenu } from "@features/menus/ProfileMenu"
 import { useLocation } from "react-router-dom"
 import { HeaderLogo } from "@assets/headerlogo"
-import { NotificationMenu } from "./components/NotificationMenu"
+import { NotificationMenu } from "../menus/NotificationMenu"
 
 function SettingsHeaderContent() {
     return (
@@ -12,38 +12,34 @@ function SettingsHeaderContent() {
     )
 }
 
-export default function ProfileHeader() {
-    const location = useLocation();
-
-    function setSearchTerm(value: unknown) {
-        throw new Error(`${value}`)
-    }
-
-    const isSettings = location.pathname.includes("settings");
-
-    return (
-        <div className="flex flex-1 justify-between">
-            {isSettings ? (
-                <SettingsHeaderContent />
-            ) : (
-                <SearchBar
-                    className={`bg-black-warm text-text-primary px-3 py-1 rounded-lg outline-none
-                    focus:bg-background-rich focus:border-1 focus:border-bucket-aqua`}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    placeholder={"Search buckets"}
-                />
-            )}
-            
+type ProfileHeader = {
+  collapsed: boolean;
+}
+export default function ProfileHeader({collapsed}:ProfileHeader) {
+  const location = useLocation();
+  const isSettings = location.pathname.includes("settings");
+const left = collapsed ? "left-20" : "left-48";
 
 
-            {/** Right Side - Constant ProfileHeader components */}
-            <div className="ml-auto flex items-center space-x-3 max-h-48">
+  function setSearchTerm(value: unknown) {
+    throw new Error(`${value}`);
+  }
 
-                <div className="max-w-48 max-h-48 flex items-center space-x-2" >
-                    <NotificationMenu />
-                    <ProfileMenu />
-                </div>
-            </div>
-        </div>
-    )
+  return (
+       <div className={`fixed top-0 ${left} right-0 h-16 bg-background border-b px-6 flex items-center transition-all duration-100 z-10`}>
+      {isSettings ? (
+        <SettingsHeaderContent />
+      ) : (
+        <SearchBar
+          className="bg-background-secondary text-text-primary px-3 py-1 rounded-lg outline-none focus:bg-background-rich"
+          onChange={e => setSearchTerm(e.target.value)}
+          placeholder={"Search buckets"}
+        />
+      )}
+      <div className="ml-auto flex items-center space-x-3 max-h-48">
+        <NotificationMenu />
+        <ProfileMenu />
+      </div>
+    </div>
+  );
 }

@@ -1,5 +1,82 @@
 @import "tailwindcss";
 
+/** Default CSS from Root 
+    Light Theme
+*/
+:root { 
+  --background: oklch(1 0 0);
+  --primary-inverse: oklch(0.25 0 0);
+  --text-inverse: oklch(0.25 0 0);
+  --background-secondary: oklch(0.93 0.005 270);    
+  --border: oklch(0.4675 0.0204 267.58);   
+  --mute: oklch(0.5795 0 0);
+            
+
+  --text-primary: oklch(0.1344 0 0);        
+  --text-secondary: oklch(0.2178 0 0);
+  --text-heading: oklch(0 0 0);        
+  --text-muted: oklch(0.5795 0 0);          
+}
+
+/** Dark Theme */
+[data-theme="dark"] {
+  --background: oklch(0.25 0 0);
+  --primary-inverse: oklch(1 0 0);
+  --text-inverse: oklch(1 0 0);
+  --background-secondary: oklch(0.32 0.01 270);           /* Slightly lighter bluish-dark */
+  --border: oklch(0.4675 0.0204 267.58);      
+  --mute: oklch(0.5795 0 0);        
+
+
+  --text-primary: oklch(0.964 0.0029 264.54);        
+  --text-secondary: oklch(0.7186 0.0152 268.44);       
+  --text-heading: oklch(0.9303 0.0046 258.33);        
+  --text-muted: oklch(0.6168 0.0237 268.29);          
+}
+
+/** Set values depending on user preference. i.e. Theme, Motion preference, etc.*/
+@theme inline {
+  --color-background: var(--background-rich);
+  --color-inverse: var(--inverse);
+  --color-black-soft: var(--black-soft);
+  --color-black-cool: var(--black-cool);
+  --color-black-warm: var(--black-warm);
+  
+  --color-background-secondary: var(--background-secondary);
+  --color-mute: var(--mute);
+  --color-primary-inverse: var(--text-primary-inverse);
+  --color-background: var(--background);
+  --color-border: var(--border);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-heading: var(--text-heading);
+  --color-text-muted: var(--text-muted);
+}
+
+/** Constant theme values*/
+@theme {
+  --color-bucket-red:oklch(0.7 0.1848 36.85);       
+  --color-bucket-yellow: oklch(0.9 0.3 103.77);    
+  --color-bucket-blue: oklch(0.7582 0.1848 222.35);    
+  --color-bucket-pink: oklch(0.7582 0.1848 360);    
+  --color-bucket-orange: oklch(0.7582 0.1848 73.05);   
+  --color-bucket-green: oklch(0.7582 0.1848 142.61);     
+  --color-bucket-aqua: oklch(0.7582 0.1848 181.05);      
+  --color-bucket-aqua-bright: #32D1C6;
+  --color-bucket-purple: oklch(0.7582 0.1848 327.42);    
+  --color-bucket-sky-blue: #32D1C6;
+
+  --color-black-soft: oklch(0.2967 0.0078 264.45);           
+  --color-black-cool: oklch(0.3671 0.0111 264.43);          
+  --color-black-warm: oklch(0.3839 0.0174 272.32);           
+
+  --color-link: oklch(0.567 0.154556 248.5156);                 
+  --color-link-hover: oklch(0.6627 0.176 310.14);
+}
+
+
+
 @keyframes slideInRight {
   0% { transform: translateX(100%); opacity: 0;}
   100% {transform: translateX(0%);opacity: 1;}
@@ -18,35 +95,5 @@
   animation: slideInLeft 0.4s ease-out forwards;
 }
 
-@theme {
-  /* Testing primary colors 'Hot' */
-  --color-bucket-red: #FF3B3F;       
-  --color-bucket-yellow: #FFE600;    
-  --color-bucket-blue: #00B7FF;     
-  --color-bucket-pink: #F54291;    
-  --color-bucket-orange: #FF7C32;   
-  --color-bucket-green: #B3FF4A;     
-  --color-bucket-aqua: #00D9C0;      
-  --color-bucket-aqua-bright: #32D1C6;
-  --color-bucket-purple: #B46FE2;    
-  --color-bucket-sky-blue: #32D1C6;
 
-  /* Background */
-  --color-background-rich: #FFFFFF;       /* Base background */
-  --color-black-soft: #F2F2F2;           
-  --color-black-cool: #F7F9FC;          
-  --color-black-warm: #EFEFEF;           
 
-  /* Border */
-  --color-border: #DDDDDD;               
-
-  /* Text */
-  --color-text-primary: #1A1A1A;        
-  --color-text-secondary: #4A4A4A;       
-  --color-text-heading: #000000;        
-  --color-text-muted: #7A7A7A;            
-  
-  /* Link */
-  --color-link: #007ACC;                 
-  --color-link-hover: #B46FE2;           
-}

@@ -16,7 +16,7 @@ const HeaderLogo: FC<LogoProps> = ({color = 'red', text='buckets'}) => {
     return (
     <div className="flex items-center gap-4">
         <span className={`w-16 h-16 flex items-center justify-center rounded-full ${colors[color]}`}>
-            <Logo className="w-4 h-4 md:w-8 md:h-8 lg:w-12 lg:h-12 rotate-12 transition-all duration-200" />
+            <Logo className="w-4 h-4 md:w-8 md:h-8 lg:w-12 lg:h-12 rotate-12 fill-text-primary transition-all duration-200" />
         </span>
 
         <h1 className="ml-4 font-sans font-bold text-text-heading text-4xl tracking-wider">
